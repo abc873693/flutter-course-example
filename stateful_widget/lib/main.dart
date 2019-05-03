@@ -1,6 +1,9 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-void main() => runApp(MyApp());
+void main() { 
+  debugDefaultTargetPlatformOverride = TargetPlatform.fuchsia;
+  runApp(MyApp());}
 
 class MyApp extends StatelessWidget {
   @override
@@ -10,7 +13,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: LifeCyclePage(),
+      home: HomePage(),
     );
   }
 }
@@ -21,7 +24,7 @@ class LifeCyclePage extends StatefulWidget {
 }
 
 class _LifeCyclePageState extends State<LifeCyclePage> {
-  int _counter;
+  int _counter = 0;
 
   @override
   void initState() {
@@ -39,7 +42,7 @@ class _LifeCyclePageState extends State<LifeCyclePage> {
       ),
       body: Center(
         child: FlatButton(
-          child: Text('$_counter'),
+          child: TextField(),
           onPressed: () {
             setState(() {
               _counter++;
@@ -168,5 +171,106 @@ class _TextInputPageState extends State<TextInputPage> {
         ],
       ),
     );
+  }
+}
+
+class SwitchPage extends StatefulWidget {
+  @override
+  _SwitchPageState createState() => _SwitchPageState();
+}
+
+class _SwitchPageState extends State<SwitchPage> {
+  var _value = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('開關'),
+      ),
+      body: Column(
+        children: <Widget>[
+          Checkbox(
+            onChanged: (bool value) {
+              setState(() {
+                _value = value;
+              });
+            },
+            value: _value,
+          ),
+          // SwitchListTile(
+          //   onChanged: (bool value) {
+          //     setState(() {
+          //       this.value = value;
+          //     });
+          //   },
+          //   value: value,
+          //   title: Text('title'),
+          //   subtitle: Text('subtitle'),
+          // ),
+          // Checkbox(
+          //   onChanged: (bool value) {
+          //     setState(() {
+          //       this.value = value;
+          //     });
+          //   },
+          //   value: value,
+          // ),
+          // CheckboxListTile(
+          //   onChanged: (bool value) {
+          //     setState(() {
+          //       this.value = value;
+          //     });
+          //   },
+          //   value: value,
+          //   title: Text('title'),
+          //   subtitle: Text('subtitle'),
+          // ),
+        ],
+      ),
+    );
+  }
+}
+
+class RadioButtonPage extends StatefulWidget {
+  @override
+  _RadioButtonPageState createState() => _RadioButtonPageState();
+}
+
+class _RadioButtonPageState extends State<RadioButtonPage> {
+  int _groupValue = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('單選按鈕'),
+      ),
+      body: Column(
+        children: <Widget>[
+          Radio(
+            groupValue: _groupValue,
+            onChanged: _updateRadio,
+            value: 0,
+          ),
+          Radio(
+            groupValue: _groupValue,
+            onChanged: _updateRadio,
+            value: 1,
+          ),
+          Radio(
+            groupValue: _groupValue,
+            onChanged: _updateRadio,
+            value: 2,
+          ),
+        ],
+      ),
+    );
+  }
+
+  _updateRadio(int value) {
+    setState(() {
+      _groupValue = value;
+    });
   }
 }

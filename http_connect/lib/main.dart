@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:dio/dio.dart';
-import 'package:http_connect/pages/home_page.dart';
+import 'package:http_connect/pages/dio_sample_page.dart';
 import 'package:http_connect/pages/http_sample_page.dart';
 
 void main() => runApp(MyApp());
@@ -16,7 +16,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: HomePage(),
+      debugShowCheckedModeBanner: true,
+      home: HttpSamplePage(),
     );
   }
 }

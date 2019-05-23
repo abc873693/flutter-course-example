@@ -11,7 +11,13 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: DialogPage(),
+      routes: {
+        Navigator.defaultRouteName: (_) => HomePage(),
+        DialogPage.routerName: (_) => DialogPage(),
+        DetailPage.routerName: (context) {
+          return DetailPage();
+        }
+      },
     );
   }
 }
@@ -32,7 +38,13 @@ class HomePageState extends State<HomePage> {
         child: RaisedButton(
           child: Text('開啟頁面'),
           onPressed: () {
-            Navigator.of(context).push(DetailPageRoute());
+            // use MaterialPageRoute
+            // Navigator.of(context).push(
+            //   MaterialPageRoute(builder: (BuildContext context) {
+            //     return DetailPage();
+            //   }),
+            // );
+            Navigator.pushNamed(context, DetailPage.routerName);
           },
         ),
       ),
@@ -48,6 +60,8 @@ class DetailPageRoute extends MaterialPageRoute {
 }
 
 class DetailPage extends StatefulWidget {
+  static String routerName = '/detail';
+
   @override
   _DetailPageState createState() => _DetailPageState();
 }
@@ -64,6 +78,7 @@ class _DetailPageState extends State<DetailPage> {
 }
 
 class DialogPage extends StatefulWidget {
+  static String routerName = '/dialog';
   @override
   _DialogPageState createState() => _DialogPageState();
 }

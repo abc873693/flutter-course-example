@@ -3,6 +3,8 @@ import 'package:http/http.dart' as http;
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:http_connect/models/notification_model.dart';
+import 'package:http_connect/widgets/notification_widget.dart';
 
 class HttpSamplePage extends StatefulWidget {
   @override
@@ -11,25 +13,27 @@ class HttpSamplePage extends StatefulWidget {
 
 class _HttpSamplePageState extends State<HttpSamplePage> {
   String str = '';
-
+  Future<List<NotificationModel>> future;
+  List<NotificationModel> list = [];
   @override
   void initState() {
-    getData();
+    future = getData();
     super.initState();
   }
 
-  void getData() async {
-    var url = 'https://google.com';
+  Future<List<NotificationModel>> getData() async {
+    List<NotificationModel> notificationModels = [];
+    var url = 'https://kuas.grd.idv.tw:14769/latest/notifications/1';
     var response = await http.get(url);
-    print('Response status: ${response.statusCode}');
-    print('Response body: ${response.body.runtimeType}');
-    setState(() {
-      str = response.body;
-    });
-    //print('Response body: ${jsonDecode(response.body).runtimeType}');
-    // Response response2 = await Dio().get(url);
-    // print('Response status: ${response2.statusCode}');
-    // print('Response body: ${response2.data.runtimeType}');
+    Utf8Decoder utf8decoder = Utf8Decoder();
+    String str = utf8decoder.convert(response.bodyBytes);
+    Map<String, dynamic> json = jsonDecode(str);
+    if (str != '') {
+      for (var i in json['notification']) {
+        notificationModels.add(NotificationModel.fromJson(i));
+      }
+    }
+    return notificationModels;
   }
 
   @override
@@ -38,7 +42,27 @@ class _HttpSamplePageState extends State<HttpSamplePage> {
       appBar: AppBar(
         title: Text('Http get'),
       ),
-      body: Text(str),
+      body: FutureBuilder(
+        future: future,
+        builder: (BuildContext context,
+            AsyncSnapshot<List<NotificationModel>> snapshot) {
+          print(snapshot.connectionState);
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          } else {
+            return ListView.builder(
+              itemBuilder: (BuildContext context, int index) {
+                return NotificationWidget(
+                  model: snapshot.data[index],
+                );
+              },
+              itemCount: snapshot.data.length,
+            );
+          }
+        },
+      ),
     );
   }
 }

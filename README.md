@@ -20,13 +20,13 @@
 * bmi_calculator   
 BMI計算機範例
 * route   
-路由轉換範例使用 ``MaterialPageRoute``
+路由轉換範例使用 ``MaterialPageRoute`` & ``MaterialApp``中的routes 定義route name
 * click_game   
 點擊小遊戲
 * async_await   
 ``異步(非同步)函數``範例
-* shared_peference_ex  
-使用package ``shared_peference`` 範例
 * http_connect  
-網路連線範例 其中也使用到``json``解析
+網路連線範例 其中也使用到``json``解析、``FutureBuilder``、package 使用 串接``url_launcher``及``share``的Flutter官方Plugin
+* tabbarview  
+TabBarView 範例 有搭配 TabBar 使用
 

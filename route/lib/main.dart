@@ -35,18 +35,34 @@ class HomePageState extends State<HomePage> {
         title: Text('頁面1'),
       ),
       body: Center(
-        child: RaisedButton(
-          child: Text('開啟頁面'),
-          onPressed: () {
-            // use MaterialPageRoute
-            // Navigator.of(context).push(
-            //   MaterialPageRoute(builder: (BuildContext context) {
-            //     return DetailPage();
-            //   }),
-            // );
-            Navigator.pushNamed(context, DetailPage.routerName);
-          },
+        child: Column(
+          children: <Widget>[
+            Hero(
+              tag: "doge",
+              child: ClipOval(
+                child: Image.asset(
+                  "images/doge.jpeg",
+                  width: 50.0,
+                ),
+              ),
+            ),
+            RaisedButton(
+              child: Text('開啟頁面'),
+              onPressed: () {
+                //use MaterialPageRoute
+                Navigator.of(context).push(
+                  MaterialPageRoute(builder: (BuildContext context) {
+                    return DogePage();
+                  }),
+                );
+                //Navigator.pushNamed(context, DetailPage.routerName);
+              },
+            )
+          ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
       ),
     );
   }
@@ -122,5 +138,31 @@ class _DialogPageState extends State<DialogPage> {
             ],
           );
         });
+  }
+}
+
+class DogePage extends StatefulWidget {
+  @override
+  _DogePageState createState() => _DogePageState();
+}
+
+class _DogePageState extends State<DogePage> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Hero(
+            tag: "doge",
+            child: Image.asset("images/doge.jpeg"),
+          ),
+          FloatingActionButton.extended(
+            label: Text('123'),
+            onPressed: () {},
+          ),
+        ],
+      ),
+    );
   }
 }

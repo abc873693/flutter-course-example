@@ -33,4 +33,6 @@ TabBarView 範例 有搭配 TabBar 使用
 展示多國語言實現在app上(i18n)使用flutter_localizations
 * flutter_web_demo  
 flutter in web 必須安裝``flutter_web``及``webdev``才能使用(flutter1.5)
+* firebase_test  
+flutter 串接 firebase Android iOS都可使用 使用``firestore``為範例
 
